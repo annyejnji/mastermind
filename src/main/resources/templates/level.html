@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start Game</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<img th:src="@{/images/kpi.png}" alt="KPI Image"
+     style="position: absolute; top: 0; left: 0; width: 120px; height: auto; margin: 10px;">
+
+
+<form th:action="@{/new-game}" method="get">
+    <label for="numberSelect">Choose a level:</label>
+    <select id="numberSelect" name="number">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+    </select>
+    <button type="submit" onclick="startGame()" class="action-button">Start Game</button>
+</form>
+
+<script>
+
+
+    function startGame() {
+        var selectedNumber = document.getElementById('numberSelect').value;
+        console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeelp: " + selectedNumber);
+
+        fetch('/sendLevel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(selectedNumber)
+        })
+            .then(response => response.text()) // Convert response to text
+            .then(data => {
+                // alert("I got here.");
+                console.log('Response from server:', data);
+                // Handle the response from the server
+            })
+            .catch(error => {
+                alert("error");
+            });
+
+    }
+
+</script>
+</body>
+</html>

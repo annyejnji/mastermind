@@ -1,0 +1,23 @@
+### List ratings
+GET http://localhost:8080/api/rating/mastermind
+Accept: application/json
+
+### Get average rating
+GET http://localhost:8080/api/rating/mastermind/average
+Accept: application/json
+
+### Create rating
+POST http://localhost:8080/api/rating
+Content-Type: application/json
+Accept: application/json
+
+{
+  "game": "mastermind",
+  "player": "Linda",
+  "rating": 5,
+  "ratedOn": "2024-03-31T21:40:12"
+}
+
+### Reset ratings
+DELETE http://localhost:8080/api/rating
+Accept: application/json

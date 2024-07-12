@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASTERMIND</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{/js/authentification.js}"></script>
+
+    <style>
+        #countdown {
+            color: black;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+
+<img th:src="@{/images/kpi.png}" alt="KPI Image"
+     style="position: absolute; top: 0; left: 0; width: 120px; height: auto; margin: 10px;">
+
+<h1>MASTERMIND</h1>
+<h2>Welcome to the Game!</h2>
+<div><strong>TIMER:</strong> <span id="countdown"></span></div>
+
+<div class="code-plus-key-table">
+
+    <div class="code-pegs-table">
+        <div class="button-grid" th:each="col : ${#numbers.sequence(1, 10)}">
+            <div th:each="row, rowIndexStat : ${#numbers.sequence(1, level)}">
+                <button class="round-buttonG" id="button_${rowIndexStat.index}"
+                        th:id="'button_' + ${col} + '_' + ${rowIndexStat.index}"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="key-pegs-table">
+        <div class="key-button-grid" th:each="col : ${#numbers.sequence(1, 10)}">
+            <div th:each="row, rowIndexStat : ${#numbers.sequence(1, level)}">
+                <button class="round-key-button" id="key-button_${rowIndexStat.index}"
+                        th:id="'key-button_' + ${col} + '_' + ${rowIndexStat.index}"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="image-buttons-container">
+    <button class="image-button" onclick="handleButtonClick('RED')">
+        <img src="/images/redPin.png" alt="Red Pin" style="max-width: 100%; max-height: 100%;">
+    </button>
+    <button class="image-button" onclick="handleButtonClick('BLUE')">
+        <img src="/images/bluePin.png" alt="Blue Pin" style="max-width: 100%; max-height: 100%;">
+    </button>
+    <button class="image-button" onclick="handleButtonClick('GREEN')">
+        <img src="/images/greenPin.png" alt="Green Pin" style="max-width: 100%; max-height: 100%;">
+    </button>
+    <button class="image-button" onclick="handleButtonClick('MAGENTA')">
+        <img src="/images/magentaPin.png" alt="Magenta Pin" style="max-width: 100%; max-height: 100%;">
+    </button>
+    <button class="image-button" onclick="handleButtonClick('INDIGO')">
+        <img src="/images/indigoPin.png" alt="Indigo Pin" style="max-width: 100%; max-height: 100%;">
+    </button>
+    <button class="image-button" onclick="handleButtonClick('WHITE')">
+        <img src="/images/whitePin.png" alt="White Pin" style="max-width: 100%; max-height: 100%;">
+    </button>
+    <button class="image-button" onclick="handleButtonClick('YELLOW')">
+        <img src="/images/yellowPin.png" alt="Yellow Pin" style="max-width: 100%; max-height: 100%;">
+    </button>
+    <button class="image-button" onclick="handleButtonClick('ORANGE')">
+        <img src="/images/orangePin.png" alt="Orange Pin" style="max-width: 100%; max-height: 100%;">
+    </button>
+</div>
+<p id="message"></p>
+
+<button onclick="confirmSelection(level)"
+        style="background-color: #ff69b4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+    Confirm Selection
+</button>
+
+<div id="rating-containerGame">
+    <div id="rating-stars">
+        <span class="starGame" data-rating="1">&#9733;</span>
+        <span class="starGame" data-rating="2">&#9733;</span>
+        <span class="starGame" data-rating="3">&#9733;</span>
+        <span class="starGame" data-rating="4">&#9733;</span>
+        <span class="starGame" data-rating="5">&#9733;</span>
+    </div>
+</div>
+
+<div id="comment-section">
+    <form id="comment-form">
+        <input type="text" id="comment-input" placeholder="Write a comment...">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="comment-message"></div>
+</div>
+<br>
+<button id="toggleButton" class="toggle-button">Toggle Button Shape</button>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var stars = document.querySelectorAll(".starGame");
+        var lastRatingId = null;
+        var rating = 0;
+
+        function highlightStars(event) {
+            var hoveredStar = event.target;
+            var ratingValue = Number(hoveredStar.dataset.rating);
+
+
+            stars.forEach(function (star) {
+                if (Number(star.dataset.rating) <= ratingValue) {
+                    star.classList.add("gold");
+                } else {
+                    star.classList.remove("gold");
+                }
+            });
+        }
+
+        function setRating(event) {
+            var clickedStar = event.target;
+            rating = Number(clickedStar.dataset.rating);
+            console.log("Rating set to:", rating);
+
+            // stars.forEach(function (star) {
+            //     star.removeEventListener("mouseenter", highlightStars);
+            //     star.removeEventListener("click", setRating);
+            // });
+            if (isLoggedIn()) {
+                stars.forEach(function (star) {
+                    if (Number(star.dataset.rating) <= rating) {
+                        star.classList.add("gold");
+                    } else {
+                        star.classList.remove("gold");
+                    }
+                });
+
+                fetch('/sendRating', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        rating: rating,
+                        id: lastRatingId,
+                    })
+                })
+                    .then(response => response.json())
+                    .then(id => {
+                        console.warn('lastRatingId', id);
+                        lastRatingId = id
+                    });
+            } else {
+                alert("Please log in if you wish to rate the game.");
+                stars.forEach(function (star) {
+
+                    star.classList.remove("gold");
+                });
+            }
+        }
+
+        stars.forEach(function (star) {
+            star.addEventListener("mouseenter", highlightStars);
+            star.addEventListener("click", setRating);
+        });
+
+
+    });
+
+
+    let clickCount = 0;
+    var currentButtonIndex = 0;
+    var totalButtons = [[${level}]];
+
+    var stringArray = new Array(totalButtons).fill(null);
+
+    var inputColorRow = "";
+
+    var colIndex = 1;
+    var maxScore = 10;
+
+
+    function handleButtonClick(color) {
+        if (currentButtonIndex < totalButtons) {
+            var buttonId = 'button_' + colIndex + "_" + currentButtonIndex;
+            var button = document.getElementById(buttonId);
+
+            if (button) {
+                button.style.backgroundColor = color.toLowerCase();
+
+                stringArray[currentButtonIndex] = color;
+                inputColorRow += color.charAt(0);
+
+                currentButtonIndex++;
+            }
+
+            console.log(stringArray);
+            console.log(inputColorRow);
+
+            if (currentButtonIndex === totalButtons) {
+                // disableButtons();
+                postData(inputColorRow);
+                // confirmSelection();
+            }
+        }
+    }
+
+    function handleKeyButton(color, index, total) {
+
+        if (index < total) {
+            var buttonId = 'key-button_' + colIndex + "_" + index;
+            var button = document.getElementById(buttonId);
+
+            if (button) {
+                if (color != null) {
+                    button.style.backgroundColor = color.toLowerCase();
+                }
+
+            }
+        }
+    }
+
+    function disableButtons() {
+        const buttons = document.querySelectorAll('.image-button');
+        buttons.forEach(button => {
+            button.disabled = true;
+        });
+    }
+
+    function enableButtons() {
+        const buttons = document.querySelectorAll('.image-button');
+        buttons.forEach(button => {
+            button.disabled = false;
+        });
+    }
+
+    function confirmSelection() {
+        var data = {
+            colors: stringArray,
+            level: totalButtons
+        };
+
+        var apiUrl = '/skontroluj-farby';
+
+        var requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }
+    }
+
+    function postData(colorText) {
+
+        fetch('/sendInputColorRow', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(colorText)
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Response from server:', data);
+                var array = data.split(", ");
+                console.log(array);
+
+                var indexNumber = -1;
+                var isRed = true;
+
+                for (var element of array) {
+                    if (element !== 'RED') {
+                        isRed = false;
+                    }
+                    indexNumber++;
+                    console.log(element);
+                    handleKeyButton(element, indexNumber, array.length);
+                }
+
+
+                if (isRed) {
+                    var score = maxScore - colIndex;
+                    disableButtons();
+                    if (isLoggedIn()) {
+                        alert("You won, " + getLoggedInUser() + "! Congrats! Your score is " + score + ".");
+                        fetch('/sendScore', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: score
+                        })
+                            .then(response => response.text())
+                            .then(data => {
+                                console.log(data);
+                            });
+                    } else {
+                        alert("You won! Congrats! Your score is " + score + ". (Log in if you wish to display your score with scores of other players.)");
+                    }
+
+                }
+                colIndex++;
+                currentButtonIndex = 0;
+                inputColorRow = "";
+
+                if (colIndex > 10) {
+                    alert("You lost.");
+                }
+
+            })
+            .catch(error => {
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const commentForm = document.getElementById("comment-form");
+        const commentMessage = document.getElementById("comment-message");
+
+        commentForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const commentInput = document.getElementById("comment-input");
+            const comment = commentInput.value;
+
+            if (isLoggedIn()) {
+                fetch('/save-comment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(comment) // Send the comment as a string
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log('Response from server:', data);
+                        commentMessage.textContent = "Comment was submitted";
+                        setTimeout(() => {
+                            commentMessage.textContent = "";
+                        }, 1000);
+                    })
+                    .catch(error => {
+                        console.error('Error sending comment:', error);
+                        // Handle errors if needed
+                    });
+            } else {
+                alert("Please log in if you wish to comment.");
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var toggleButton = document.getElementById("toggleButton");
+        var buttons = document.querySelectorAll(".round-buttonG");
+
+        toggleButton.addEventListener("click", function () {
+            buttons.forEach(function (button) {
+                button.classList.toggle("square-button");
+            });
+        });
+    });
+
+    function pauseTimer() {
+        clearTimeout(timer);
+    }
+
+    function resumeTimer() {
+        startTimer();
+    }
+
+    function updateCountdown(seconds) {
+        const countdownElement = document.getElementById('countdown');
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        countdownElement.textContent = `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+
+
+    function gameOver() {
+        alert("Time's up! You lost.");
+        disableButtons();
+    }
+
+    function startTimer() {
+        timer = setTimeout(() => {
+            gameOver();
+        }, 120000);
+
+        let secondsLeft = 120;
+        const countdownInterval = setInterval(() => {
+            secondsLeft--;
+            updateCountdown(secondsLeft);
+            if (secondsLeft === 0) {
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+    }
+
+    startTimer();
+</script>
+</body>
+</html>

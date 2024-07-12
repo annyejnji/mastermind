@@ -1,0 +1,28 @@
+### List comments
+GET http://localhost:8080/api/comment/mastermind
+Accept: application/json
+
+### Create comment
+POST http://localhost:8080/api/comment
+Content-Type: application/json
+Accept: application/json
+
+{
+  "game": "mastermind",
+  "player": "Linda",
+  "comment": "nuda",
+  "commentedOn": "2024-03-31T21:30:39"
+}
+
+### Update comment
+PUT http://localhost:8080/api/comment/5
+Content-Type: application/json
+Accept: application/json
+
+{
+  "comment": "uzasna hra"
+}
+
+### Reset comments
+DELETE http://localhost:8080/api/comment
+Accept: application/json

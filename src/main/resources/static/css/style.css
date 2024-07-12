@@ -1,0 +1,385 @@
+
+body {
+    background-image: url('../images/background.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+
+.action-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+.return_button {
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.alredy_have_message {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 30px;
+}
+
+.brain-image {
+    width: 200px;
+    height: auto;
+}
+
+.image-buttons-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(50px, auto);
+    grid-gap: 10px;
+    justify-items: flex-start;
+/ max-width: 400 px;
+    margin: 0 auto;
+}
+
+.image-button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#message {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#numberSelect {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.round-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.commentTitle {
+    color: white;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 8px;
+    color: black;
+
+    .table-container {
+        margin-bottom: 20px;
+    }
+
+    .brain-image-container {
+        text-align: center;
+    }
+}
+
+.RatingTitle {
+    color: white;
+}
+
+.rating-container {
+    margin-bottom: 20px;
+    display: table;
+    width: 30%;
+}
+
+.rating {
+    font-size: 24px;
+    color: black;
+    display: table-row;
+    vertical-align: middle;
+}
+
+.player-cell,
+.date-cell,
+.star-cell {
+    display: table-cell;
+    padding: 5px;
+    width: 1%;
+    max-width: 40px;
+}
+
+.starGame {
+    width: 24px;
+    height: auto;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.player-name {
+    min-width: 150px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.rated-date {
+    color: #999;
+    font-size: 14px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.brain-image-container-rating {
+    text-align: center;
+}
+
+.containerComment {
+    background-color: #f6f6f6;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titleComment {
+    color: #5c8d8d;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.columns-containerComment {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.columnComment {
+    flex: 0 0 48%;
+    padding: 10px;
+}
+
+.playerComment {
+    font-weight: bold;
+    color: #ff69b4;
+}
+
+.comment-contentComment {
+    margin-top: 10px;
+    color: #333;
+    font-size: 16px;
+}
+
+.commented-onComment {
+    color: #999;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
+.commentComm {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+#comment-message {
+    color: white;
+    background-color: #98B2B3;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.code-plus-key-table {
+    display: flex;
+    max-width: 500px;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 10px;
+}
+
+.round-buttonG {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.square-button.round-buttonG {
+    border-radius: 0;
+}
+
+.triangle-button {
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 50px solid black;
+}
+
+
+.key-button-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+}
+
+.round-key-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0px 0px 25px 0px;
+    border: none;
+    border: none;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+#comment-section {
+    position: absolute;
+    top: 87%;
+    right: 15%;
+    transform: translateY(-50%);
+    font-family: "Arial", sans-serif;
+    color: #333;
+}
+
+#comment-input {
+    width: 200px;
+    padding: 10px;
+    border: 2px solid #e6e6e6;
+    border-radius: 20px;
+    outline: none;
+    margin-right: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+#comment-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #98B2B3;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#comment-form button:hover {
+    background-color: #98B2B3;
+}
+
+h1:first-child {
+    margin-bottom: 0;
+}
+
+h1:last-child {
+    margin-top: 0;
+}
+
+#rating-containerGame {
+    position: absolute;
+    top: 77%;
+    right: 20%;
+}
+
+.starGame {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s;
+    font-size: 30px;
+}
+
+.starGame.gold {
+    color: #EE6FA8;
+}
+
+.toggle-button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}

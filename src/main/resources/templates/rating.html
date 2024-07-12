@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mastermind</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<img th:src="@{/images/kpi.png}" alt="KPI Image"
+     style="position: absolute; top: 0; left: 0; width: 120px; height: auto; margin: 10px;">
+
+
+<h1 class="RatingTitle">RATINGS</h1>
+<div class="rating-container">
+    <div th:each="rating : ${ratings}" class="rating">
+        <div class="star-cell">
+            <span th:each="star : ${#numbers.sequence(1, rating.rating)}"><img th:src="@{/images/star.png}" alt="Star"
+                                                                               class="starGame"></span>
+        </div>
+        <div class="player-cell">
+            <span class="player-name" th:text="${rating.player}"></span>
+        </div>
+        <div class="date-cell">
+            <span class="rated-date" th:text="${#dates.format(rating.ratedOn, 'dd-MM-yy HH:mm:ss')}"></span>
+        </div>
+    </div>
+</div>
+
+<span style="color: black; font-family: 'Cursive', sans-serif; font-size: 20px; font-weight: bold;"
+      th:text="'Average rating is ' + ${averageRating}"></span>
+
+
+<br>
+<div class="brain-image-container-rating">
+    <img th:src="@{/images/brain.png}" alt="Brain Image" class="brain-image">
+</div>
+</body>
+</html>

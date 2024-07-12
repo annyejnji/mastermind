@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{/js/authentification.js}"></script>
+
+</head>
+<body>
+<img th:src="@{/images/kpi.png}" alt="KPI Image"
+     style="position: absolute; top: 0; left: 0; width: 120px; height: auto; margin: 10px;">
+
+<h1 class="title">LOGIN</h1>
+
+<!-- Login Form -->
+<form th:action="@{/login}" method="POST" class="login-form" id="loginForm">
+    <div class="form-group">
+        <label for="login-username">Username:</label>
+        <input type="text" id="login-username" name="username" required class="input-field">
+    </div>
+    <div class="form-group">
+        <label for="login-password">Password:</label>
+        <input type="password" id="login-password" name="password" required class="input-field">
+    </div>
+    <button type="button" class="action-button" onclick="checkLogin()">Login</button>
+</form>
+<br>
+<br>
+
+<div class="welcome-text">
+    <span class="already-have-message">Don't have an account?</span>
+</div>
+<br>
+<div class="button-container">
+    <form th:action="@{/registration}" method="POST">
+        <button type="submit" class="action-button" id="register_button">Register</button>
+    </form>
+</div>
+<br>
+<div class="brain-image-container">
+    <img th:src="@{/images/brain.png}" alt="Brain Image" class="brain-image">
+</div>
+
+</body>
+</html>
+
+<script>
+    function checkLogin() {
+        var username = document.getElementById('login-username').value;
+        var password = document.getElementById('login-password').value;
+
+        var users = JSON.parse(localStorage.getItem('users')) || [];
+
+        var matchedUser = users.find(function (user) {
+            return user.username === username && user.password === password;
+        });
+
+        if (matchedUser) {
+            logInUser(username);
+            logInUserRating(username);
+            logInUserScore(username);
+            setLoggedInState(username);
+            alert('Login successful! Welcome, ' + username + '!');
+            window.location.href = '/';
+
+        } else {
+            alert('Invalid username or password.');
+        }
+    }
+
+    function logInUser(loggedUserName) {
+        fetch('/loggedUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loggedUserName)
+        })
+            .then(response => response.text()) // Convert response to text
+            .then(data => {
+                // alert("I got here.");
+                console.log('Response from server:', data);
+                // Handle the response from the server
+            })
+            .catch(error => {
+                alert("error");
+            });
+    }
+
+    function logInUserRating(loggedUserName) {
+        fetch('/loggedUserRating', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loggedUserName)
+        })
+            .then(response => response.text()) // Convert response to text
+            .then(data => {
+                // alert("I got here.");
+                console.log('Response from server:', data);
+                // Handle the response from the server
+            })
+            .catch(error => {
+                alert("error");
+            });
+    }
+
+    function logInUserScore(loggedUserName) {
+        fetch('/loggedUserScore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loggedUserName)
+        })
+            .then(response => response.text()) // Convert response to text
+            .then(data => {
+                // alert("I got here.");
+                console.log('Response from server:', data);
+                // Handle the response from the server
+            })
+            .catch(error => {
+                alert("error");
+            });
+    }
+
+    function hideForm() {
+
+        document.getElementById("loginForm").style.display = 'hide';
+
+    }
+
+</script>

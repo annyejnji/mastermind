@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mastermind</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{/js/authentification.js}"></script>
+</head>
+<body>
+
+<img th:src="@{/images/kpi.png}" alt="KPI Image"
+     style="position: absolute; top: 0; left: 0; width: 120px; height: auto; margin: 10px;">
+
+
+<h1 class="title">MASTERMIND</h1>
+<div id="welcome_sentence"></div>
+<br>
+
+<div class="button-container">
+    <form th:action="@{/newGame}" method="POST">
+        <button type="submit" class="action-button" id="new_game_btn">New Game</button>
+    </form>
+</div>
+<br>
+
+<div class="button-container">
+    <form th:action="@{/login}" method="POST">
+        <button type="submit" class="action-button" id="login_button">Login</button>
+    </form>
+</div>
+<br>
+<div class="button-container">
+    <form th:action="@{/registration}" method="POST">
+        <button type="submit" class="action-button" id="register_button">Register</button>
+    </form>
+</div>
+<br>
+<div class="button-container">
+    <form th:action="@{/score}" method="POST">
+        <button type="submit" class="action-button" id="score_button">Score</button>
+    </form>
+</div>
+<br>
+<div class="button-container">
+    <form th:action="@{/comments}" method="POST">
+        <button type="submit" class="action-button" id="comment_button">Comments</button>
+    </form>
+</div>
+<br>
+<div class="button-container">
+    <form th:action="@{/rating}" method="POST">
+        <button type="submit" class="action-button" id="rating_button">Rating</button>
+    </form>
+</div>
+<br>
+<div class="brain-image-container">
+    <img th:src="@{/images/brain.png}" alt="Brain Image" class="brain-image">
+</div>
+
+<script>
+    if (isLoggedIn()) {
+        document.getElementById("login_button").style.display = 'none';
+        document.getElementById("register_button").style.display = 'none';
+        document.getElementById("welcome_sentence").innerHTML += "Welcome, " + getLoggedInUser() + ". " + "<a href='#' onclick='logout()'>Logout</a>";
+
+    } else {
+        document.getElementById("welcome_sentence").innerHTML += "You are not logged in yet, but welcome.";
+        document.getElementById("login_button").style.display = 'inline-block';
+        document.getElementById("register_button").style.display = 'inline-block';
+    }
+    
+</script>
+</body>
+</html>

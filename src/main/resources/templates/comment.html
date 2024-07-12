@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mastermind</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<img th:src="@{/images/kpi.png}" alt="KPI Image"
+     style="position: absolute; top: 0; left: 0; width: 120px; height: auto; margin: 10px;">
+
+<div class="containerComment">
+    <h1 class="titleComment">COMMENTS</h1>
+    <div class="columns-containerComment">
+        <div class="columnComment">
+            <div th:each="comment, iterStat : ${comments}" th:if="${iterStat.index < 5}">
+                <div class="commentComm">
+                    <div class="playerComment" th:text="${comment.player}"></div>
+                    <div class="comment-contentComment" th:text="${comment.comment}"></div>
+                    <div class="commented-onComment" th:text="${comment.commentedOn}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="columnComment">
+            <div th:each="comment, iterStat : ${comments}" th:if="${iterStat.index >= 5}">
+                <div class="commentComm">
+                    <div class="playerComment" th:text="${comment.player}"></div>
+                    <div class="comment-contentComment" th:text="${comment.comment}"></div>
+                    <div class="commented-onComment" th:text="${comment.commentedOn}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+### List scores
+GET http://localhost:8080/api/score/mastermind
+Accept: application/json
+
+### Create score
+POST http://localhost:8080/api/score
+Content-Type: application/json
+Accept: application/json
+
+{
+  "game": "mastermind",
+  "player": "Linda",
+  "points": 7,
+  "playedOn": "2024-03-31T20:40:33"
+}
+
+### Reset scores
+DELETE http://localhost:8080/api/score
+Accept: application/json

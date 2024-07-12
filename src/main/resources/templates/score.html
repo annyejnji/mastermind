@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mastermind</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<img th:src="@{/images/kpi.png}" alt="KPI Image"
+     style="position: absolute; top: 0; left: 0; width: 120px; height: auto; margin: 10px;">
+
+<h1 class="commentTitle">SCORE</h1>
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Played on</th>
+        </tr>
+        <tr th:each="score: ${scores}">
+            <td th:text="${score.player}"/>
+            <td th:text="${score.points}"/>
+            <td th:text="${score.playedOn}"/>
+        </tr>
+    </table>
+</div>
+
+<div class="brain-image-container">
+    <img th:src="@{/images/brain.png}" alt="Brain Image" class="brain-image">
+</div>
+</body>
+</html>
